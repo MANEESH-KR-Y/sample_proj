@@ -3,24 +3,36 @@ pipeline {
 
     stages {
 
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/MANEESH-KR-Y/sample_proj.git'
+            }
+        }
+
         stage('Build') {
             steps {
-                echo "Compiling main source code"
-                bat 'mvn clean compile'
+                dir('sample_proj') {
+                    echo "Compiling main source code"
+                    bat 'mvn clean compile'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                echo "Running unit tests"
-                bat 'mvn test'
+                dir('sample_proj') {
+                    echo "Running unit tests"
+                    bat 'mvn test'
+                }
             }
         }
 
         stage('Package') {
             steps {
-                echo "Creating package"
-                bat 'mvn package'
+                dir('sample_proj') {
+                    echo "Creating package"
+                    bat 'mvn package'
+                }
             }
         }
     }
@@ -33,7 +45,7 @@ pipeline {
             echo 'Build Failed'
         }
         always {
-            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+            junit 'sample_proj\\target\\surefire-reports\\*.xml'
         }
     }
 }
