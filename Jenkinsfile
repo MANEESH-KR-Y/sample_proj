@@ -3,12 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/MANEESH-KR-Y/sample_proj.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 echo "Compiling main source code"
@@ -39,7 +33,7 @@ pipeline {
             echo 'Build Failed'
         }
         always {
-            junit '**/target/surefire-reports/*.xml'
+            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
         }
     }
 }
