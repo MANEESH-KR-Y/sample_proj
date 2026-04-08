@@ -1,8 +1,11 @@
 pipeline {
     agent any
 
-    stages {
+       tools {
+        maven 'Maven-3.9.6' 
+    }
 
+    stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/MANEESH-KR-Y/sample_proj.git'
@@ -45,7 +48,7 @@ pipeline {
             echo 'Build Failed'
         }
         always {
-            junit 'sample_proj\\target\\surefire-reports\\*.xml'
+                       junit 'sample_proj/target/surefire-reports/*.xml'
         }
     }
 }
