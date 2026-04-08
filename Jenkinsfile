@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-       tools {
+    tools {
         maven 'maven 3.9.14' 
     }
 
@@ -14,28 +14,22 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('sample_proj') {
-                    echo "Compiling main source code"
-                    bat 'mvn clean compile'
-                }
+                echo "Compiling main source code"
+                bat 'mvn clean compile'
             }
         }
 
         stage('Test') {
             steps {
-                dir('sample_proj') {
-                    echo "Running unit tests"
-                    bat 'mvn test'
-                }
+                echo "Running unit tests"
+                bat 'mvn test'
             }
         }
 
         stage('Package') {
             steps {
-                dir('sample_proj') {
-                    echo "Creating package"
-                    bat 'mvn package'
-                }
+                echo "Creating package"
+                bat 'mvn package'
             }
         }
     }
@@ -48,7 +42,7 @@ pipeline {
             echo 'Build Failed'
         }
         always {
-                       junit 'sample_proj/target/surefire-reports/*.xml'
+            junit 'target/surefire-reports/*.xml'
         }
     }
 }
