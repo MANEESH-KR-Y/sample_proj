@@ -42,7 +42,7 @@ pipeline {
             echo 'Build Failed'
         }
         always {
-            junit 'target/surefire-reports/*.xml', allowEmptyResults: true
+            junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
         }
     }
 }
